@@ -7,3 +7,5 @@ Telegram bot with generating random questions from interviews
 3 step: Launch the bot. You can start the bot with the 'run' button in your IDE
 
 4 step: Go to telegram and enter the command '/start'
+
+**The '/generate' command outputs 5 random questions**
