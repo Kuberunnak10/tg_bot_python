@@ -9,30 +9,45 @@ bot = telebot.TeleBot(API_TOKEN)
 
 @bot.message_handler(commands=['start'])
 def first_step(message):
-    bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}.',
+    """The bot activation command"""
+    bot.send_message(message.chat.id,
+                     f'Привет, {message.from_user.first_name}.'
+                     f'\nВсе возможности бота можете посмотреть по команде /help',
                      reply_markup=call_menu_buttons())
 
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
+    """/help command"""
     bot.send_message(message.chat.id,
                      'Функционал бота 🤖:\n/start  👉 Запуск бота\n'
-                     '/generate  👉 Сгенерировать 5 вопросов из собеседований')
+                     '/generate  👉 Сгенерировать 5 вопросов из собеседований\n/github  👉 Мой github')
+
+
+@bot.message_handler(commands=['github'])
+def get_github(message):
+    """Get my GitHub"""
+    bot.send_message(message.chat.id, 'github.com/Kuberunnak10')
 
 
 @bot.message_handler(commands=['generate'])
 def get_questions(message):
+    """Send str with 5 questions"""
     bot.send_message(message.chat.id, get_questions_list())
 
 
 @bot.message_handler()
 def custom_first_step(message):
+    """Custom activation of the bot"""
     if message.text.lower() == 'привет':
-        bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}.',
+        bot.send_message(message.chat.id,
+                         f'Привет, {message.from_user.first_name}.'
+                         f'\nВсе возможности бота можете посмотреть по команде /help',
                          reply_markup=call_menu_buttons())
 
 
 def call_menu_buttons():
+    """Create buttons in telegram"""
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton('/generate')
     btn2 = types.KeyboardButton('/github')
