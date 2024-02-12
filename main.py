@@ -2,6 +2,7 @@ import telebot
 from telebot import types
 
 from config import API_TOKEN
+from database.database import save_to_db
 from questions_list import get_questions_list
 
 bot = telebot.TeleBot(API_TOKEN)
@@ -10,6 +11,8 @@ bot = telebot.TeleBot(API_TOKEN)
 @bot.message_handler(commands=['start'])
 def first_step(message):
     """The bot activation command"""
+    user_id = message.chat.id
+    save_to_db(user_id)
     bot.send_message(message.chat.id,
                      f'Привет, {message.from_user.first_name}.'
                      f'\nВсе возможности бота можете посмотреть по команде /help',
@@ -39,6 +42,8 @@ def get_questions(message):
 @bot.message_handler()
 def custom_first_step(message):
     """Custom activation of the bot"""
+    user_id = message.chat.id
+    save_to_db(user_id)
     if message.text.lower() == 'привет':
         bot.send_message(message.chat.id,
                          f'Привет, {message.from_user.first_name}.'
